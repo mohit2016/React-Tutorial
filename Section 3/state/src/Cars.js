@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
 import App from './App';
+import PropTypes from 'prop-types'
+
+// Stateless Functional Component
+const CarType = props =>{
+    return (
+        <li>
+            <h3> {props.name} </h3>
+            <h4> Models : {props.models.join(" , ")}  </h4>
+        </li>
+    );
+}
+
+// PropTypes for CarType
+CarType.propTypes = {
+    name : PropTypes.string,
+    models : PropTypes.arrayOf(PropTypes.string)
+};
 
 class Cars extends Component {
   
-
     constructor(){
       super();
   
@@ -25,7 +41,7 @@ class Cars extends Component {
         const randModel = Math.floor(Math.random()*this.state.cars[randCar].length);
 
 
-// Make Duplicate first of cars and hobbies. Because accessing directly is a bad thing. 
+// Make Duplicate first of cars and models. Because accessing directly is a bad thing. 
 // Always Remember Changes to this.state should be pure.
 
         // const cars = this.state.cars.slice();
@@ -52,10 +68,12 @@ class Cars extends Component {
 }
   render() {
     const cars  = this.state.cars.map((car,index)=>{
-        return  <li key ={index}>
-                    <h3> {car.name} </h3>
-                    <h4> {car.models.join(" , ")}  </h4>
-                </li>
+        return  <CarType key ={index} 
+                name = {car.name}
+                models = {car.models}
+                />
+                    
+                
     });
     return (
       <div>
